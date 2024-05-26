@@ -4,6 +4,7 @@ import { CellShader } from "./shaders"
 export class App {
     private constructor() { }
 
+    private static canvas: HTMLCanvasElement
     private static device: GPUDevice
     private static context: GPUCanvasContext
     private static vertexBufferLayout: GPUVertexBufferLayout
@@ -13,7 +14,9 @@ export class App {
     private static gridArray: Float32Array
     private static gridBuffer: GPUBuffer
     private static bindGroup: GPUBindGroup
-    private static readonly GRID_SIZE = 1024
+    private static readonly GRID_WIDTH = 1
+    private static GRID_COLS: number
+    private static GRID_ROWS: number
 
 
     public static async init() {
@@ -22,13 +25,16 @@ export class App {
         this.setupBuffers()
         this.setRenderPipeline(canvasFormat)
         this.setBindGroup()
-        this.renderLoop()
+        requestAnimationFrame(this.renderLoop.bind(this))
     }
 
     private static setupScreenResizing() {
-        const canvas = document.getElementById("webgpu-canvas") as HTMLCanvasElement
-        window.addEventListener("resize", (ev) => resize(canvas, ev))
-        resize(canvas)
+        this.canvas = document.getElementById("webgpu-canvas") as HTMLCanvasElement
+        window.addEventListener("resize", (ev) => resize(this.canvas, ev))
+        resize(this.canvas)
+
+        this.GRID_COLS = Math.floor(this.canvas.width / this.GRID_WIDTH)
+        this.GRID_ROWS = Math.floor(this.canvas.height / this.GRID_WIDTH)
     }
 
     private static async setupGPUDeviceAndCanvasContext() {
@@ -47,8 +53,7 @@ export class App {
         }
         this.device = device
 
-        const canvas = document.getElementById("webgpu-canvas") as HTMLCanvasElement
-        const context = canvas.getContext("webgpu")
+        const context = this.canvas.getContext("webgpu")
         if (!context) {
             throw new Error("Failed to get canvas context")
         }
@@ -69,10 +74,15 @@ export class App {
     }
 
     private static setupVertexBuffer() {
-        App.vertexArray = new Float32Array([
+        this.vertexArray = new Float32Array([
             -1, -1, -1, 1, 1, 1,
             -1, -1, 1, -1, 1, 1
         ])
+
+        // this.vertexArray = new Float32Array([
+        //     -0.8, -0.8, -0.8, 0.8, 0.8, 0.8,
+        //     -0.8, -0.8, 0.8, -0.8, 0.8, 0.8
+        // ])
 
         this.vertexBuffer = this.device.createBuffer({
             label: "Vertex Buffer",
@@ -93,7 +103,7 @@ export class App {
     }
 
     private static setupGridBuffer() {
-        this.gridArray = new Float32Array([this.GRID_SIZE, this.GRID_SIZE])
+        this.gridArray = new Float32Array([this.GRID_COLS, this.GRID_ROWS])
 
         this.gridBuffer = this.device.createBuffer({
             label: "Grid Buffer",
@@ -140,6 +150,7 @@ export class App {
     }
 
     private static renderLoop() {
+
         const encoder = this.device.createCommandEncoder()
 
         const pass = encoder.beginRenderPass({
@@ -154,9 +165,10 @@ export class App {
         pass.setPipeline(this.renderPipeLine)
         pass.setVertexBuffer(0, this.vertexBuffer)
         pass.setBindGroup(0, this.bindGroup)
-        pass.draw(this.vertexArray.length / 2, this.GRID_SIZE * this.GRID_SIZE)
+        pass.draw(this.vertexArray.length / 2, this.GRID_COLS * this.GRID_ROWS)
 
         pass.end()
         this.device.queue.submit([encoder.finish()])
+        requestAnimationFrame(this.renderLoop.bind(this))
     }
 }
