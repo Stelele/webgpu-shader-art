@@ -1,2 +1,2 @@
-export * from "./CellShader"
-export * from "./ComputeShader"
+export * from "./fragments"
+export * from "./vertices"

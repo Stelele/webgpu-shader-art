@@ -2,8 +2,8 @@ export function resize(canvas: HTMLCanvasElement, _event?: UIEvent) {
     // current screen size
     const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     const screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    const canvasWidth = 600
-    const canvasHeight = 600
+    const canvasWidth = 640
+    const canvasHeight = 320
 
     // uniform scale for our game
     const scale = Math.min(screenWidth / canvasWidth, screenHeight / canvasHeight);
@@ -21,4 +21,11 @@ export function resize(canvas: HTMLCanvasElement, _event?: UIEvent) {
     canvas.style.height = `${enlargedHeight}px`;
     canvas.style.marginLeft = canvas.style.marginRight = `${horizontalMargin}px`;
     canvas.style.marginTop = canvas.style.marginBottom = `${verticalMargin}px`;
+}
+
+export function resize2(canvas: HTMLCanvasElement, device: GPUDevice) {
+    const width = window.innerWidth
+    const height = window.innerHeight
+    canvas.width = Math.max(1, Math.min(width, device.limits.maxTextureDimension2D));
+    canvas.height = Math.max(1, Math.min(height, device.limits.maxTextureDimension2D))
 }
