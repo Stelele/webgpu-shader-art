@@ -1,5 +1,5 @@
 import { resize2 } from "./helpers/ResizeWindow"
-import { FirstArtFragmentShader, SmileyV1FragmentShader, SmileyV2FragmentShader, SmileyV3FragmentShader, WaveyRectFragmentShader } from "./shaders"
+import { FirstArtFragmentShader, SecondArtFragmentShader, SmileyV1FragmentShader, SmileyV2FragmentShader, SmileyV3FragmentShader, WaveyRectFragmentShader } from "./shaders"
 import { GridArrayVertexShader } from "./shaders/vertices"
 
 export class App {
@@ -37,7 +37,8 @@ export class App {
         SmileyV1FragmentShader,
         WaveyRectFragmentShader,
         SmileyV2FragmentShader,
-        SmileyV3FragmentShader
+        SmileyV3FragmentShader,
+        SecondArtFragmentShader
     ]
 
     public static async start(canvas: HTMLCanvasElement) {
@@ -153,7 +154,7 @@ export class App {
 
         App.fragmentShaderModule = App.device.createShaderModule({
             label: "Fragment Shader Module",
-            code: App.fragmentShaders[0]
+            code: App.fragmentShaders[5]
         })
     }
 
