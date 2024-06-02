@@ -153,7 +153,7 @@ export class App {
 
         App.fragmentShaderModule = App.device.createShaderModule({
             label: "Fragment Shader Module",
-            code: App.fragmentShaders[4]
+            code: App.fragmentShaders[0]
         })
     }
 
