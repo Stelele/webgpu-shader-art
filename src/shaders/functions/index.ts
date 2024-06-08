@@ -1,3 +1,5 @@
 export * from "./PaletteFunc"
 export * from "./CircleFunc"
 export * from "./RemapFunc"
+export * from "./ColorWheelFunc"
+export * from "./MapFunc"

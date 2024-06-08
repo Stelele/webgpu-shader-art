@@ -1,5 +1,5 @@
 import { resize2 } from "./helpers/ResizeWindow"
-import { FirstArtFragmentShader, SecondArtFragmentShader, SmileyV1FragmentShader, SmileyV2FragmentShader, SmileyV3FragmentShader, WaveyRectFragmentShader } from "./shaders"
+import { FirstArtFragmentShader, SecondArtFragmentShader, OneDShaderKataFragmentShader, SmileyV1FragmentShader, SmileyV2FragmentShader, SmileyV3FragmentShader, WaveyRectFragmentShader, ColorShaperKataFragmentShader } from "./shaders"
 import { GridArrayVertexShader } from "./shaders/vertices"
 
 export class App {
@@ -18,7 +18,7 @@ export class App {
     private static vertexBuffer: GPUBuffer
     private static gridArray: Float32Array
     private static gridBuffer: GPUBuffer
-    private static GRID_SIZE = 2048
+    private static GRID_SIZE = 1024
 
     private static vertexShaderModule: GPUShaderModule
     private static fragmentShaderModule: GPUShaderModule
@@ -38,7 +38,9 @@ export class App {
         WaveyRectFragmentShader,
         SmileyV2FragmentShader,
         SmileyV3FragmentShader,
-        SecondArtFragmentShader
+        SecondArtFragmentShader,
+        OneDShaderKataFragmentShader,
+        ColorShaperKataFragmentShader
     ]
 
     public static async start(canvas: HTMLCanvasElement) {
@@ -67,7 +69,7 @@ export class App {
         // App.render(300)
 
         async function getDevice() {
-            const adapater = await navigator.gpu.requestAdapter()
+            const adapater = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" })
             const device = adapater?.requestDevice()
 
             if (!device) {
@@ -154,7 +156,7 @@ export class App {
 
         App.fragmentShaderModule = App.device.createShaderModule({
             label: "Fragment Shader Module",
-            code: App.fragmentShaders[5]
+            code: App.fragmentShaders[7]
         })
     }
 

@@ -14,10 +14,12 @@ export const SecondArtFragmentShader = /* wgsl */ `
 
         var uv0 = uv;
         var col = vec3f(0.);
+        var r = length(uv) + sin(t);
+        var theta = atan(uv.y / uv.x) + t;
+        uv.x = r * cos(theta);
+        uv.y = r * sin(theta);
         for(var i = 0; i < 3; i++) {
-            uv.y -= sin(t *.4);
-            uv.x -= cos(t * .5);
-            var d = .4;
+            var d = .1;
             uv = 2 * fract(uv) - 1;
             var rect = sdRect(uv, vec2f(d, d));
             rect = tan(rect * 8. + t + f32(i));
