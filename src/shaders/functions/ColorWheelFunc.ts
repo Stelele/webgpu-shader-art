@@ -1,4 +1,4 @@
-import { Map3Func, MapFunc } from "./MapFunc"
+import { Maps } from "./MapFunc"
 
 export const HSB2RGPFunc = /* wgsl */ `
     fn hsb2rgb(hsb: vec3f) -> vec3f {
@@ -17,8 +17,7 @@ export const HSB2RGPFunc = /* wgsl */ `
 
 export const RYBToRYBFunc = /* wgsl */ `
     ${HSB2RGPFunc}
-    ${MapFunc}
-    ${Map3Func}
+    ${Maps}
 
     fn ryb2rgb(ryb: vec3f) -> vec3f {
         var theta = ryb[0];

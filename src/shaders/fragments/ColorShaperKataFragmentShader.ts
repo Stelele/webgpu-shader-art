@@ -1,11 +1,10 @@
-import { PI, TWO_PI } from "../constants";
+import { TWO_PI } from "../constants";
 import { RYBToRYBFunc } from "../functions";
 import { Uniforms, VertexOut } from "../vertices";
 
 export const ColorShaperKataFragmentShader = /* wgsl */ `
     ${VertexOut}
     ${Uniforms}
-    ${PI}
     ${TWO_PI}
     ${RYBToRYBFunc}
 

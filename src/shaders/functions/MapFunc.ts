@@ -1,6 +1,6 @@
 import { PI } from "../constants"
 
-export const MapFunc = /* wgsl */ `
+const MapFunc = /* wgsl */ `
     fn map(value: f32, start1: f32, stop1: f32, start2: f32, stop2: f32) -> f32 {
         var b = start2;
         var c = stop2 - start2;
@@ -13,13 +13,13 @@ export const MapFunc = /* wgsl */ `
 `
 
 // When is the Easing applied
-export const WhenEasingEnum = /* wgsl */ `
+const WhenEasingEnum = /* wgsl */ `
     const EASE_IN: u32 = 0;
     const EASE_OUT: u32 = 1;
     const EASE_IN_OUT: u32 = 2;
 `
 
-export const EasingTypeEnum = /* wgsl */ `
+const EasingTypeEnum = /* wgsl */ `
     const LINEAR: u32 = 0;
     const QUADRATIC: u32 = 1;
     const CUBIC : u32= 2;
@@ -32,11 +32,7 @@ export const EasingTypeEnum = /* wgsl */ `
 `
 
 
-export const Map2Func = /* wgsl */ `
-    // ${EasingTypeEnum}
-    // ${WhenEasingEnum}
-    // ${PI}
-    
+const Map2Func = /* wgsl */ `    
     fn map2(value: f32, start1: f32, stop1: f32, start2: f32, stop2: f32, easingType: u32, whenEasing: u32) -> f32 {
         var b = start2;
         var c = stop2 - start2;
@@ -231,9 +227,7 @@ export const Map2Func = /* wgsl */ `
     }
 `
 
-export const Map3Func = /* wgsl */ `
-    ${WhenEasingEnum}
-
+const Map3Func = /* wgsl */ `
     fn map3(value: f32, start1: f32, stop1: f32, start2: f32, stop2: f32, v: f32, when: u32) -> f32 {
         var b = start2;
         var c = stop2 - start2;
@@ -257,4 +251,14 @@ export const Map3Func = /* wgsl */ `
             }
         }
     }
+`
+
+export const Maps = /* wgsl */ `
+    ${PI}
+    ${EasingTypeEnum}
+    ${WhenEasingEnum}
+
+    ${MapFunc}
+    ${Map2Func}
+    ${Map3Func}
 `
