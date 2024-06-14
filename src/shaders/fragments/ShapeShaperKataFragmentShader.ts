@@ -13,6 +13,7 @@ export const ShapeShaperKataFragmentShader = /* wgsl */ `
     @fragment
     fn fragmentMain(in: VertexOut) -> @location(0) vec4f {
         var uv = in.cell / grid;
+        uv.x *= resolution.x / resolution.y;
         var t = f32(timeStep) / 1000.;
         var col = vec3f(.0);
 
