@@ -1,5 +1,4 @@
-import { TWO_PI } from "../constants";
-import { CircleFunc, RYBToRYBFunc, RectFunc } from "../functions";
+import { CircleFunc, PolygonFunc, RYBToRYBFunc, RectFunc, TransformationFunc } from "../functions";
 import { Uniforms, VertexOut } from "../vertices";
 
 export const MatrixKataFragementShader = /* wgsl */ `
@@ -8,7 +7,8 @@ export const MatrixKataFragementShader = /* wgsl */ `
     ${CircleFunc}
     ${RYBToRYBFunc}
     ${RectFunc}
-    ${TWO_PI}
+    ${TransformationFunc}
+    ${PolygonFunc}
 
     @fragment
     fn fragmentMain(in: VertexOut) -> @location(0) vec4f {
@@ -111,65 +111,5 @@ export const MatrixKataFragementShader = /* wgsl */ `
         var triangle2 = polygon(rotate2D(uv2, -PI/2), 3);
 
         return triangle1 + triangle2;
-    }
-
-    fn polygon(uv: vec2f, sides: f32) -> f32 {
-        var a = atan2(uv.x, uv.y) + PI;
-        var r = TWO_PI / sides;
-
-        var d = cos(floor(.5 + a / r) * r - a) * length(uv);
-
-        var col = 1. - smoothstep(.4, .41, d);
-        return col;
-    }
-
-    fn circleLineSegment(uv: vec2f, center: vec2f, radius: f32, theta: f32, thickness: f32, blur: f32) ->  f32 {
-        var uv0 = rotate2D(uv, theta/2);
-        var theta0 = atan2(uv0.y, uv0.x);
-        var segment0 = circleOutline(uv0, center, radius, thickness, blur);
-        segment0 *= smoothstep(-theta, -theta - .01, theta0);
-
-        var uv1 = rotate2D(uv, PI + theta /2);
-        var theta1 = atan2(uv1.y, uv1.x);
-        var segment1 = circleOutline(uv1, center, radius, thickness, blur);
-        segment1 *= smoothstep(-theta, -theta - .01, theta1);
-
-        return segment0 + segment1;
-    }
-
-    fn circleSegment(uv: vec2f, center: vec2f, radius: f32, blur: f32) -> f32 {
-        var r = length(uv);
-        var theta = atan2(uv.y, uv.x) / TWO_PI + .5;
-
-        var circle = 3. * (.25 - theta) * smoothstep(radius, radius - .1, r) * smoothstep(.2, .2 - .1, theta);
-
-        var line = rect(rotate2D(uv, 1.57), -.007, .007, radius -.05, center.y, .01);
-
-
-        return circle + line;
-    }
-
-    fn rotate2D(uv: vec2f, theta: f32) -> vec2f{
-        let rotation = mat2x2f(
-            cos(theta), -sin(theta),
-            sin(theta), cos(theta)
-        );
-
-        return  rotation * uv;
-    }
-
-    fn scale2D(uv: vec2f, scale: vec2f) -> vec2f {
-        var s = mat2x2f(scale.x, .0,
-                        .0     , scale.y
-        );
-
-        return scale * uv;
-    }
-
-    fn circleOutline(uv: vec2f, center: vec2f, r: f32, thickness: f32, blur: f32) -> f32 {
-        var circle1 = circle2(uv, center, r, blur);
-        var circle2 = circle2(uv, center, r - thickness, blur);
-
-        return circle1 - circle2;
     }
 `
