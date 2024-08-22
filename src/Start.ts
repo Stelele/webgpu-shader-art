@@ -186,7 +186,6 @@ export class App {
             }
         })
     }
-
     private static setupBindGroups() {
         App.bindGroup = App.device.createBindGroup({
             label: "Bind Group",

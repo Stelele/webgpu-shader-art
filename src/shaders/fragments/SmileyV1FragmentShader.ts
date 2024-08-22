@@ -1,4 +1,5 @@
-import { CircleFunc, RemapFunc } from "../functions";
+import { PI } from "../constants";
+import { CircleFunc, RectFunc, RemapFunc, TransformationFunc } from "../functions";
 import { Uniforms, VertexOut } from "../vertices";
 
 export const SmileyV1FragmentShader = /* wgsl */ `
@@ -6,6 +7,9 @@ export const SmileyV1FragmentShader = /* wgsl */ `
     ${Uniforms}
     ${CircleFunc}
     ${RemapFunc}
+    ${TransformationFunc}
+    ${PI}
+    ${RectFunc}
 
     @fragment
     fn fragmentMain(in: VertexOut) -> @location(0) vec4f {

@@ -1,5 +1,5 @@
-import { TWO_PI } from "../constants";
-import { CircleFunc, RYBToRYBFunc, RectFunc } from "../functions";
+// import { TWO_PI } from "../constants";
+import { CircleFunc, RYBToRYBFunc, RectFunc, TransformationFunc } from "../functions";
 import { Uniforms, VertexOut } from "../vertices";
 
 export const ShapeShaperKataFragmentShader = /* wgsl */ `
@@ -8,7 +8,8 @@ export const ShapeShaperKataFragmentShader = /* wgsl */ `
     ${RectFunc}
     ${CircleFunc}
     ${RYBToRYBFunc}
-    ${TWO_PI}
+    ${TransformationFunc}
+    
 
     @fragment
     fn fragmentMain(in: VertexOut) -> @location(0) vec4f {

@@ -1,4 +1,5 @@
-import { CircleFunc, PalletFunc } from "../functions";
+import { PI } from "../constants";
+import { CircleFunc, PalletFunc, TransformationFunc } from "../functions";
 import { Uniforms, VertexOut } from "../vertices";
 
 export const WaveyRectFragmentShader = /* wgsl */ `
@@ -6,6 +7,8 @@ export const WaveyRectFragmentShader = /* wgsl */ `
     ${Uniforms}
     ${CircleFunc}
     ${PalletFunc}
+    ${TransformationFunc}
+    ${PI}
 
     @fragment
     fn fragmentMain(in: VertexOut) -> @location(0) vec4f {

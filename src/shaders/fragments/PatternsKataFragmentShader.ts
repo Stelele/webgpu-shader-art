@@ -18,12 +18,12 @@ export const PatternsKataFragmentShader = /* wgsl */ `
 
         var col = vec3f(.0);
         
-        // col = pattern1(uv);
-        // col = pattern2(uv);
-        // col = pattern3(uv);
-        // col = pattern4(uv);
-        // col = pattern5(uv);
-        // col = pattern6(uv);
+        col = pattern1(uv);
+        col = pattern2(uv);
+        col = pattern3(uv);
+        col = pattern4(uv);
+        col = pattern5(uv);
+        col = pattern6(uv);
         col = pattern7(uv);
         
         return vec4f(col, 1.);
