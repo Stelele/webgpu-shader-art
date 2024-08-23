@@ -18,10 +18,10 @@ export const ShapeShaperKataFragmentShader = /* wgsl */ `
         var t = f32(timeStep) / 1000.;
         var col = vec3f(.0);
 
-        // col = circleFunnies(uv, t);
+        col = circleFunnies(uv, t);
         // col = fields(uv);
         // col = tableau(uv);
-        col = polarFields(uv, vec2f(.5), t);
+        // col = polarFields(uv, vec2f(.5), t);
 
         return vec4f(col, 1.);
     }

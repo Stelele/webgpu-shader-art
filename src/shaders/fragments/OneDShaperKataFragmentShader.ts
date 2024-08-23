@@ -9,8 +9,8 @@ export const OneDShaderKataFragmentShader = /* wgsl */ `
         var uv = 2 * in.cell / grid - 1;
         var t = f32(timeStep) / 1000;
 
-        var y = 1. - pow(abs(uv.x), 2.);
-
+        var y = 1. - pow(abs(uv.x), 3.);
+        // var y = abs(uv.x);
         var pct = plot(uv, y);
         var col = (1 - pct) * vec3f(y) + pct * vec3f(0., 1., .0);
         
